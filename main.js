@@ -7,7 +7,7 @@ const app = Vue.createApp({
             events: {},
             texts: {},
             players: [],
-            current_language: 'fr',
+            current_language: 'en',
             current_server_header: 'EmpireEx_3',
             current_event_name: window.sessionStorage.getItem('event') ?? '',
             current_category_index: window.sessionStorage.getItem('category') ?? 0,
@@ -20,6 +20,7 @@ const app = Vue.createApp({
             alliance_ranking: !!window.sessionStorage.getItem('alliance') ?? false
         }
     },
+
 
     async mounted() {
         await this.getLanguages();
@@ -71,12 +72,7 @@ const app = Vue.createApp({
             <option v-for="(event, key) in this.eventsList" :value="key" :key="key">{{ this.texts[key] }}</option>
         </select>
         <div id="content">
-            <div id="navigate_buttons">
-                <button @click="this.firstPage"><img src="assets/double_arrow_up.svg" alt="first page"/></button>
-                <button @click="this.previousPage"><img src="assets/arrow_up.svg" alt="previous page"/></button>
-                <button @click="this.nextPage"><img src="assets/arrow_up.svg" alt="next page" style="transform:rotate(180deg);"/></button>
-                <button @click="this.lastPage"><img src="assets/double_arrow_up.svg" alt="last page" style="transform:rotate(180deg);"/></button>
-            </div>
+            
             <table id="table">
                 <colgroup>
                     <col class="small_column">
@@ -134,12 +130,18 @@ const app = Vue.createApp({
                         <td id="search" colspan="10">
                             <div>
                                 <input id="search_input" :placeholder="this.texts.dialog_highscore_search" @keydown.enter="this.search"/>
-                                <button @click="this.search"><img src="assets/search.svg" alt="search"/></button>
+                                <button @click="this.search" id="srch-btn"><img src="assets/search.svg" alt="search"/></button>
                             </div>                   
                         </td>
                     </tr>
                 </tfoot>
             </table>
+            <div id="navigate_buttons">
+                <button @click="this.firstPage"><img src="assets/double_arrow_up.svg" alt="first page"/></button>
+                <button @click="this.previousPage"><img src="assets/arrow_up.svg" alt="previous page"/></button>
+                <button @click="this.nextPage"><img src="assets/arrow_up.svg" alt="next page" style="transform:rotate(180deg);"/></button>
+                <button @click="this.lastPage"><img src="assets/double_arrow_up.svg" alt="last page" style="transform:rotate(180deg);"/></button>
+            </div>
         </div>
         <select id="languages" v-model="this.current_language" @change="changeLanguage">
             <option v-for="language in languages" :value="language" :key="language">{{ this.texts["language_native_" + language.toLowerCase()] }}</option>
